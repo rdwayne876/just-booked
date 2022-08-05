@@ -3,7 +3,9 @@ const Provider = require( '../models/providers')
 const bcrypt = require( 'bcryptjs')
 const salt = bcrypt.genSaltSync(10)
 const jwt = require( 'jsonwebtoken')
-const { userInfo } = require('os')
+const { createAccessToken, createRefreshToken, refreshTokens } = require( '../config/tokens')
+const { async } = require('rxjs')
+const { log } = require('console')
 
 exports.register = async( req, res) => {
     try {
@@ -40,21 +42,23 @@ exports.register = async( req, res) => {
             phone
         })
 
-        //create token
-        const token = jwt.sign(
-            {provider_id: provider._id, email},
-            process.env.TOKEN_KEY,
-            {expiresIn: "2h"}
-        )
+        //create access token
+        const accessToken = createAccessToken
 
-        //save provider token
-        provider.token = token
+        //create refresh token
+        const refreshToken = createRefreshToken
+
+        //save provider tokens
+        provider.accessToken = accessToken
+        provider['refreshToken'].push(refreshToken)
 
         //return created provider
         res.status(201).json({
             status: "Success",
             data: {
-                provider
+                provider,
+                accessToken,
+                refreshToken
             }
         })
 
@@ -81,21 +85,34 @@ exports.login = async( req, res) => {
 
         // check for user and if passwords match
         if( provider && ( await bcrypt.compare(password, provider.password))) {
-           //create token
-            const token = jwt.sign(
+           //create access token
+            const accessToken = jwt.sign(
                 {provider_id: provider._id, email},
-                process.env.TOKEN_KEY,
-                {expiresIn: "2h"}
+                process.env.ACCESS_TOKEN_SECRET,
+                {expiresIn: "15m"}
             )
 
-            //save user token
-            provider.token = token
+            //create refresh token
+            const refreshToken = jwt.sign(
+                {provider_id: provider._id, email},
+                process.env.REFRESH_TOKEN_SECRET,
+                {expiresIn: "20m"}
+            
+            )
 
-            //provider
-            res.status( 200).json({
-                message: "Success",
+            //save provider tokens
+            provider.accessToken = accessToken
+            provider.refreshToken.push(refreshToken)
+
+            updateProvider = provider.save({ new: true })
+
+            //return created provider
+            res.status(201).json({
+                status: "Success",
                 data: {
-                    provider
+                    provider,
+                    accessToken,
+                    refreshToken
                 }
             })
         }
@@ -109,4 +126,52 @@ exports.login = async( req, res) => {
     } catch ( err){
         console.error( err);
     }
+
+
+    exports.refresh = async( req, res) => {
+
+        //check if refresh token is valid
+        if( !refreshTokens.includes(req.body.token)) {
+            res.status(400).json({
+                status: "Failed",
+                message: "Invalid refresh token"
+            })
+        }
+        // remove old refresh token from the refresh tokens list
+        refreshTokens = refreshTokens.filter((token) => token != req.body.token)
+
+        // genereate new access and refresh tokens
+        const accessToken = createAccessToken
+        const refreshToken = createRefreshToken
+
+        // Return new tokens
+        res.status(200).json({
+            accessToken: accessToken,
+            refreshToken: refreshToken
+        })
+
+    }
+
+    exports.logout = async(req, res) => {
+
+        try {
+            // remove the refresh token from the refresh tokens list
+            refreshTokens = refreshTokens.filter((token) => token != req.body.token)
+        } catch (error) {
+            console.error( error);
+        }
+
+    }
+
+    // exports.authTest = async( req, res) => {
+
+    //     try {
+    //         console.log( "Valid Token");
+    //         console.log( req.user.user);
+    //         res.send( `${req.user.user} successfully accessed test route`)
+    //     } catch (error) {
+    //         console.error( error);
+    //     }
+
+    // }
 }

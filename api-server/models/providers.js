@@ -22,9 +22,30 @@ const providerSchema = new mongoose.Schema({
         type: String, 
         required: [true, 'Phone number must be specified']
     },
-    token: {
+    accessToken: {
         type: String
-    }
+    },
+    refreshToken: [
+        {
+            type: String,
+        }
+    ],
+    address: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Address'
+    }, 
+    services: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Service'
+        }
+    ],
+    appointments: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Appointment'
+        }
+    ]
 })
 
-module.exports = mongoose.model("provider", providerSchema)
+module.exports = mongoose.model("Provider", providerSchema)
