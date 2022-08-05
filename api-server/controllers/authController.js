@@ -1,4 +1,3 @@
-const express = require( 'express')
 const Provider = require( '../models/providers')
 const bcrypt = require( 'bcryptjs')
 const salt = bcrypt.genSaltSync(10)
@@ -43,10 +42,10 @@ exports.register = async( req, res) => {
         })
 
         //create access token
-        const accessToken = createAccessToken
+        const accessToken = createAccessToken({ user: provider.email})
 
         //create refresh token
-        const refreshToken = createRefreshToken
+        const refreshToken = createRefreshToken()
 
         //save provider tokens
         provider.accessToken = accessToken
