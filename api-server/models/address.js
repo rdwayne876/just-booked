@@ -20,6 +20,9 @@ const addressSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Provider'
     }
+},
+{
+    timestamps: true
 })
 
 const Address = mongoose.model('Address', addressSchema)

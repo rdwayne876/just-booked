@@ -46,6 +46,9 @@ const providerSchema = new mongoose.Schema({
             ref: 'Appointment'
         }
     ]
+},
+{
+    timestamps: true,
 })
 
 module.exports = mongoose.model("Provider", providerSchema)

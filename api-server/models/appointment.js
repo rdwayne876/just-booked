@@ -19,4 +19,7 @@ const appointmentSchema = new mongoose.Schema({
             ref: 'Service'
         }
     ]
+},
+{
+    timestamps: true
 })
