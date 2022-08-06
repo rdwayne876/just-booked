@@ -3,6 +3,7 @@ const morgan = require('morgan');
 const app = express();
 const authRouter = require( './routes/auth')
 const providerRouter = require( './routes/provider')
+const serviceRouter = require( './routes/service')
 
 // 1) MIDDLEWARES
 app.use(morgan('dev'));
@@ -35,5 +36,6 @@ app.use((req, res, next) =>{
 //Routes
 app.use( '/api/v1/auth', authRouter)
 app.use( '/api/v1/providers', providerRouter)
+app.use( 'api/v1/services', serviceRouter)
 
 module.exports = app;
