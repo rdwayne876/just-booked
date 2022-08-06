@@ -1,4 +1,5 @@
 const Service = require('../models/service')
+const Provider = require('../models/providers')
 
 exports.create = async( req, res) => {
     try{
@@ -14,6 +15,12 @@ exports.create = async( req, res) => {
             time,
             provider,  
         })
+
+        const serviceProvider = await Provider.findById(provider)
+
+        serviceProvider['services'].push(service._id)
+
+        serviceProvider.save()
 
         //send back the response
         res.status( 201).json({
@@ -84,8 +91,6 @@ exports.update = async( req, res) => {
                 message: 'Service Not Found'
             })
         }
-
-        service.save({ new: true})
 
         res.status(200).json({
             success: true,

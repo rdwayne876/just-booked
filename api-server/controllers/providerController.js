@@ -1,4 +1,5 @@
 const Provider = require('../models/providers')
+const Service = require('../models/service')
 
 exports.find = async( req, res) => {
     try {
@@ -89,5 +90,24 @@ exports.deleteOne = async( req, res) => {
         })
     } catch (error) {
         console.error( error);
+    }
+}
+
+exports.findService = async( req, res) => {
+    try{
+        // get services of the provider
+        const services = await Provider.findById(req.params.id).populate("services")
+            .select('-_id -firstName -lastName -email -password -phone -refreshToken -appointments -__v -updatedAt')
+
+        //return services
+        return res.status(200).json({
+            success: true,
+            message: 'Services found successfully',
+            data: {
+                services
+            }
+        })
+    } catch( err){
+        console.error( err)
     }
 }

@@ -36,6 +36,6 @@ app.use((req, res, next) =>{
 //Routes
 app.use( '/api/v1/auth', authRouter)
 app.use( '/api/v1/providers', providerRouter)
-app.use( 'api/v1/services', serviceRouter)
+app.use( '/api/v1/services', serviceRouter)
 
 module.exports = app;
