@@ -3,7 +3,7 @@ const { register, login, refresh, logout, authTest } = require('../controllers/a
 const { validateToken } = require('../middlewares/auth')
 const router = express('router')
 
-router.route('/register').post(register)
+router.route('/register/:type').post(register)
 router.route('/login').post(login)
 // router.route( '/refreshToken').post(refresh)
 // router.route('/logout').delete(logout)

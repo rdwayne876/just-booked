@@ -1,65 +1,124 @@
 const Provider = require( '../models/providers')
+const User = require( '../models/user')
 const bcrypt = require( 'bcryptjs')
 const salt = bcrypt.genSaltSync(10)
 const jwt = require( 'jsonwebtoken')
 const { createAccessToken, createRefreshToken, refreshTokens } = require( '../config/tokens')
 const { async } = require('rxjs')
-const { log } = require('console')
+const { log, info } = require('console')
 
 exports.register = async( req, res) => {
     try {
-        // Deconstructor gets user input
-        const { firstName, lastName, email, password, phone} = req.body
 
-        // Validate user input
-        if(!(email && password && firstName && lastName && phone)) {
-            res.status(400).json({
-                status: "Failed", 
-                message: "All fields are required"
-            })
-        }
+        if( req.params.type === 'provider'){
+            // Deconstructor gets user input
+            const { firstName, lastName, email, password, phone} = req.body
 
-        //check if provider already exists
-        const oldProvider = await Provider.findOne({ email})
-
-        if( oldProvider)  {
-            return res.status(409).json({
-                status: "Failed", 
-                message: "User already exists. Please login"
-            })
-        }
-
-        //Hash password w/ bcrypt
-        encryptedPassword = await bcrypt.hash(password, salt)
-
-        //create provider in db
-        const provider = await Provider.create({
-            firstName,
-            lastName,
-            email: email.toLowerCase(), // Sanitize: converst email to lowercase
-            password: encryptedPassword,
-            phone
-        })
-
-        //create access token
-        const accessToken = createAccessToken({ user: provider.email})
-
-        //create refresh token
-        const refreshToken = createRefreshToken()
-
-        //save provider tokens
-        provider.accessToken = accessToken
-        provider['refreshToken'].push(refreshToken)
-
-        //return created provider
-        res.status(201).json({
-            status: "Success",
-            data: {
-                provider,
-                accessToken,
-                refreshToken
+            // Validate user input
+            if(!(email && password && firstName && lastName && phone)) {
+                res.status(400).json({
+                    status: "Failed", 
+                    message: "All fields are required"
+                })
             }
-        })
+
+            //check if provider already exists
+            const oldProvider = await Provider.findOne({ email})
+
+            if( oldProvider)  {
+                return res.status(409).json({
+                    status: "Failed", 
+                    message: "User already exists. Please login"
+                })
+            }
+
+            //Hash password w/ bcrypt
+            encryptedPassword = await bcrypt.hash(password, salt)
+
+            //create provider in db
+            const provider = await Provider.create({
+                firstName,
+                lastName,
+                email: email.toLowerCase(), // Sanitize: converst email to lowercase
+                password: encryptedPassword,
+                phone
+            })
+
+            //create access token
+            const accessToken = createAccessToken({ user: provider.email})
+
+            //create refresh token
+            const refreshToken = createRefreshToken()
+
+            //save provider tokens
+            provider.accessToken = accessToken
+            provider['refreshToken'].push(refreshToken)
+
+            //return created provider
+            res.status(201).json({
+                status: "Success",
+                data: {
+                    provider,
+                    accessToken,
+                    refreshToken
+                }
+            })
+        }
+
+        if( req.params.type === 'user'){
+            // Deconstructor gets user input
+            const { firstName, lastName, email, password, phone} = req.body
+
+            // Validate user input
+            if(!(email && password && firstName && lastName && phone)) {
+                res.status(400).json({
+                    status: "Failed", 
+                    message: "All fields are required"
+                })
+            }
+
+            //check if provider already exists
+            const oldUser = await User.findOne({ email})
+
+            if( oldUser)  {
+                return res.status(409).json({
+                    status: "Failed", 
+                    message: "User already exists. Please login"
+                })
+            }
+
+            //Hash password w/ bcrypt
+            encryptedPassword = await bcrypt.hash(password, salt)
+
+            //create user in db
+            const user = await User.create({
+                firstName,
+                lastName,
+                email: email.toLowerCase(), // Sanitize: converst email to lowercase
+                password: encryptedPassword,
+                phone
+            })
+
+            //create access token
+            const accessToken = createAccessToken({ user: user.email})
+
+            //create refresh token
+            const refreshToken = createRefreshToken()
+
+            //save user tokens
+            user.accessToken = accessToken
+            user['refreshToken'].push(refreshToken)
+
+            //return created provider
+            res.status(201).json({
+                status: "Success",
+                data: {
+                    user,
+                    accessToken,
+                    refreshToken
+                }
+            })
+        }
 
     } catch ( err) {
         console.error( err);
