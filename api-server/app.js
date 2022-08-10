@@ -5,6 +5,7 @@ const authRouter = require( './routes/auth')
 const providerRouter = require( './routes/provider')
 const serviceRouter = require( './routes/service')
 const userRouter = require( './routes/user')
+const appointmentRouter = require( './routes/appointment')
 
 // 1) MIDDLEWARES
 app.use(morgan('dev'));
@@ -39,5 +40,6 @@ app.use( '/api/v1/auth', authRouter)
 app.use( '/api/v1/providers', providerRouter)
 app.use( '/api/v1/services', serviceRouter)
 app.use( '/api/v1/users', userRouter)
+app.use( '/api/v1/appointments', appointmentRouter)
 
 module.exports = app;

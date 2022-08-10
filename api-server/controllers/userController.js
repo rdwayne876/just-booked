@@ -92,4 +92,22 @@ exports.deleteOne = async( req, res) => {
     }
 }
 
+exports.findAppointments = async( req, res) => {
+    try{
+        const appointments = await User.findById(req.params.id).populate("appointments")
+            .select('-_id -firstName -lastName -email -password -phone -refreshToken -__v -updatedAt')
+
+        return res.status(200).json({
+            success: true,
+            message: 'Appointments found successfully',
+            data: {
+                appointments
+                }
+            })
+    } catch( err) {
+        console.error( err)
+
+    }
+}
+
 

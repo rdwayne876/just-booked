@@ -111,3 +111,21 @@ exports.findService = async( req, res) => {
         console.error( err)
     }
 }
+
+exports.findAppointments = async( req, res) => {
+    try{
+        const appointments = await Provider.findById(req.params.id).populate("appointments")
+            .select('-_id -firstName -lastName -email -password -phone -refreshToken -services -__v -updatedAt')
+
+        return res.status(200).json({
+            success: true,
+            message: 'Appointments found successfully',
+            data: {
+                appointments
+                }
+            })
+    } catch( err) {
+        console.error( err)
+
+    }
+}
