@@ -19,6 +19,7 @@ exports.validateToken = ( req, res, next ) => {
                 message: "Invalid access token"
             })
         } else{
+            console.log( user);
             req.user = user
             next()
         }

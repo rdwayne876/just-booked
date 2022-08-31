@@ -6,21 +6,18 @@ const jwt = require( 'jsonwebtoken')
 const { createAccessToken, createRefreshToken, refreshTokens } = require( '../config/tokens')
 const { async } = require('rxjs')
 const { log, info } = require('console')
+const { registerValidation } = require('../validation')
 
 exports.register = async( req, res) => {
     try {
 
+        // Validate user info
+        const { error} = registerValidation( req.body)
+        if( error) return res.status( 400).send( error.details[0].message)
+
         if( req.params.type === 'provider'){
             // Deconstructor gets user input
             const { firstName, lastName, email, password, phone} = req.body
-
-            // Validate user input
-            if(!(email && password && firstName && lastName && phone)) {
-                res.status(400).json({
-                    status: "Failed", 
-                    message: "All fields are required"
-                })
-            }
 
             //check if provider already exists
             const oldProvider = await Provider.findOne({ email})
@@ -145,24 +142,24 @@ exports.login = async( req, res) => {
         if( provider && ( await bcrypt.compare(password, provider.password))) {
            //create access token
             const accessToken = jwt.sign(
-                {provider_id: provider._id, email},
+                {user: provider._id},
                 process.env.ACCESS_TOKEN_SECRET,
                 {expiresIn: "15m"}
             )
 
-            //create refresh token
+            //create refresh token 
             const refreshToken = jwt.sign(
-                {provider_id: provider._id, email},
+                {provider_id: provider._id},
                 process.env.REFRESH_TOKEN_SECRET,
                 {expiresIn: "20m"}
             
             )
 
             //save provider tokens
-            provider.accessToken = accessToken
-            provider.refreshToken.push(refreshToken)
+            // provider.accessToken = accessToken
+            // provider.refreshToken.push(refreshToken)
 
-            updateProvider = provider.save({ new: true })
+            // updateProvider = provider.save({ new: true })
 
             //return created provider
             res.status(201).json({
@@ -221,15 +218,15 @@ exports.login = async( req, res) => {
 
     }
 
-    // exports.authTest = async( req, res) => {
+    exports.authTest = async( req, res) => {
 
-    //     try {
-    //         console.log( "Valid Token");
-    //         console.log( req.user.user);
-    //         res.send( `${req.user.user} successfully accessed test route`)
-    //     } catch (error) {
-    //         console.error( error);
-    //     }
+        try {
+            console.log( "Valid Token");
+            console.log( req.user.user);
+            res.send( `${req.user.user} successfully accessed test route`)
+        } catch (error) {
+            console.error( error);
+        }
 
-    // }
+    }
 }

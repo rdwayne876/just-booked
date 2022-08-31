@@ -1,0 +1,60 @@
+<mat-drawer-container class=" w-screen h-full" hasBackdrop="false">
+  <mat-drawer mode="side" opened class="w-1/6">
+    <div class="flex flex-col">
+      <div class="flex w-full justify-center items-center pt-4">
+        <div class="flex w-4/5 items-center p-3">
+          <img src="https://i.pravatar.cc/65" class="w-16 rounded-full" alt="">
+          <div class="flex flex-col">
+            <span class="pl-2 text-lg">John Doe</span>
+            <span class="pl-2"> edit profile</span>
+          </div>
+        </div>
+      </div>
+
+      <button routerLink="">
+        <div class="flex items-center">
+          <mat-icon class="pr-2">dashboard</mat-icon>
+          <p> Dashboard</p>
+        </div>
+      </button>
+
+      <button routerLink="appointments">
+        <div class="flex items-center">
+          <mat-icon class="pr-2">date_range</mat-icon>
+          <p> My Appointments</p>
+        </div>
+      </button>
+      
+      <button routerLink="services">
+        <div class="flex items-center">
+          <mat-icon class="pr-2">assignment</mat-icon>
+          <p> My Services</p>
+        </div>
+      </button>
+      
+      <button routerLink="reviews">
+        <div class="flex items-center">
+          <mat-icon class="pr-2">rate_review</mat-icon>
+          <p> My Reviews</p>
+        </div>
+      </button>
+      
+      <button routerLink="profile">
+        <div class="flex items-center">
+          <mat-icon class="pr-2">account_circle</mat-icon>
+          <p> My Profile</p>
+        </div>
+      </button>
+      
+      <button>
+        <div class="flex items-center">
+          <mat-icon class="pr-2">exit_to_app</mat-icon>
+          <p> Logout</p>
+        </div>
+      </button> 
+    </div>
+  </mat-drawer>
+  <mat-drawer-content>
+    <router-outlet></router-outlet>
+  </mat-drawer-content>
+</mat-drawer-container>
