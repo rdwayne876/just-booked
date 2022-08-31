@@ -7,19 +7,23 @@ import { AuthApiService } from './auth-api.service';
 })
 export class ProviderAuthService {
 
+  private readonly TOKEN_NAME = 'provider_auth'
   private _isLoggedIn$ = new BehaviorSubject<boolean>( false)
   isLoggedIn$ = this._isLoggedIn$.asObservable()
 
+  get token(){
+    return localStorage.getItem(this.TOKEN_NAME)
+  }
+
   constructor(private authApi: AuthApiService) { 
-    const token = localStorage.getItem( 'provider_auth')
-    this._isLoggedIn$.next(!!token)
+    this._isLoggedIn$.next(!!this.token)
   }
 
   login(body: object) {
     return this.authApi.login(body).pipe(
       tap(( resp: any) => {
         this._isLoggedIn$.next( true)
-        localStorage.setItem( 'provider_auth', resp.data.accessToken)        
+        localStorage.setItem( this.TOKEN_NAME, resp.data.accessToken)        
       })
     )
   }

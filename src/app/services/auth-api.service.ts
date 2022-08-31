@@ -28,4 +28,12 @@ export class AuthApiService {
   public login(  body: any): Observable<Provider>{
     return this.http.post<Provider>( `${this.REST_API_SERVER}/login`, body, this.HTTP_HEADER)
   }
+
+  /**
+   * Uses token to locate authorized user profile
+   * @returns  authenticated user profile
+   */
+  public account(): Observable<Provider>{
+    return this.http.get<Provider>( `${this.REST_API_SERVER}/user`, this.HTTP_HEADER)
+  }
 }

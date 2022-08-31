@@ -21,7 +21,6 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 
 import { SidebarComponent } from './provider/components/sidebar/sidebar.component';
 import { DashboardComponent } from './provider/pages/dashboard/dashboard.component';
-import { SidenavService } from './provider/services/sidenav.service';
 import { ProviderLayoutComponent } from './provider-layout/provider-layout.component';
 import { ProviderDashboardComponent } from './components/provider-dashboard/provider-dashboard.component';
 import { ProviderAppointmentsComponent } from './components/provider-appointments/provider-appointments.component';
@@ -31,6 +30,7 @@ import { ProviderProfileComponent } from './components/provider-profile/provider
 import { ProviderLoginComponent } from './components/provider-login/provider-login.component';
 import { ProviderAuthLayoutComponent } from './provider-auth-layout/provider-auth-layout.component';
 import { ProviderRegisterComponent } from './components/provider-register/provider-register.component';
+import { ProviderAuthInterceptorProvider } from './provider-auth.interceptor';
 
 
 
@@ -69,11 +69,7 @@ import { ProviderRegisterComponent } from './components/provider-register/provid
     MatCheckboxModule
   ],
   providers: [
-    {
-      provide: MatDrawer,
-      useValue: {}
-    },
-    SidenavService
+    ProviderAuthInterceptorProvider
   ],
   bootstrap: [AppComponent]
 })
