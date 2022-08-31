@@ -1,7 +1,7 @@
 <mat-drawer-container class=" w-screen h-full" hasBackdrop="false">
   <mat-drawer mode="side" opened class="w-1/6">
     <div class="flex flex-col">
-      <div class="flex w-full justify-center items-center pt-4">
+      <div class="flex w-full justify-center items-center p-6">
         <div class="flex w-4/5 items-center p-3">
           <img src="https://i.pravatar.cc/65" class="w-16 rounded-full" alt="">
           <div class="flex flex-col">
@@ -11,50 +11,68 @@
         </div>
       </div>
 
-      <button routerLink="">
-        <div class="flex items-center">
-          <mat-icon class="pr-2">dashboard</mat-icon>
-          <p> Dashboard</p>
+      <div class="px-6 py-3">
+        <div class="border-b-2">
+          <button routerLink="">
+            <div class="flex items-center px-2 py-5">
+              <mat-icon class="pr-2">dashboard</mat-icon>
+              <p class="mb-0"> Dashboard</p>
+            </div>
+          </button>
         </div>
-      </button>
+        
+        <div class="border-b-2">
+          <button routerLink="appointments">
+            <div class="flex items-center py-5 px-2">
+              <mat-icon class="pr-2">date_range</mat-icon>
+              <p class="mb-0"> My Appointments</p>
+            </div>
+          </button>
+        </div>
+        
+        
+        <div class="border-b-2">
+          <button routerLink="services">
+            <div class="flex items-center py-5 px-2">
+              <mat-icon class="pr-2">assignment</mat-icon>
+              <p class="mb-0"> My Services</p>
+            </div>
+          </button>
+        </div>
+        
+        <div class="border-b-2">
+          <button routerLink="reviews">
+            <div class="flex items-center py-5 px-2">
+              <mat-icon class="pr-2">rate_review</mat-icon>
+              <p class="mb-0"> My Reviews</p>
+            </div>
+          </button>
+        </div>
+        
+        <div class="border-b-2">
+          <button routerLink="profile">
+            <div class="flex items-center py-5 px-2">
+              <mat-icon class="pr-2">account_circle</mat-icon>
+              <p class="mb-0"> My Profile</p>
+            </div>
+          </button>
+        </div>
+        
+        <div class="border-b-2">
+          <button>
+            <div class="flex items-center py-5 px-2">
+              <mat-icon class="pr-2">exit_to_app</mat-icon>
+              <p class="mb-0"> Logout</p>
+            </div>
+          </button> 
+        </div>
+      </div>
 
-      <button routerLink="appointments">
-        <div class="flex items-center">
-          <mat-icon class="pr-2">date_range</mat-icon>
-          <p> My Appointments</p>
-        </div>
-      </button>
       
-      <button routerLink="services">
-        <div class="flex items-center">
-          <mat-icon class="pr-2">assignment</mat-icon>
-          <p> My Services</p>
-        </div>
-      </button>
       
-      <button routerLink="reviews">
-        <div class="flex items-center">
-          <mat-icon class="pr-2">rate_review</mat-icon>
-          <p> My Reviews</p>
-        </div>
-      </button>
-      
-      <button routerLink="profile">
-        <div class="flex items-center">
-          <mat-icon class="pr-2">account_circle</mat-icon>
-          <p> My Profile</p>
-        </div>
-      </button>
-      
-      <button>
-        <div class="flex items-center">
-          <mat-icon class="pr-2">exit_to_app</mat-icon>
-          <p> Logout</p>
-        </div>
-      </button> 
     </div>
   </mat-drawer>
-  <mat-drawer-content>
-    <router-outlet></router-outlet>
+  <mat-drawer-content class="w-5/6">
+    <router-outlet class="overflow-hidden"></router-outlet>
   </mat-drawer-content>
 </mat-drawer-container>
