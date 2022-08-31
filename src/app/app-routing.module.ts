@@ -5,11 +5,16 @@ import { ProviderDashboardComponent } from './components/provider-dashboard/prov
 import { ProviderProfileComponent } from './components/provider-profile/provider-profile.component';
 import { ProviderReviewsComponent } from './components/provider-reviews/provider-reviews.component';
 import { ProviderServicesComponent } from './components/provider-services/provider-services.component';
+import { ProviderAuthLayoutComponent } from './provider-auth-layout/provider-auth-layout.component';
+import { ProviderAuthenticatedGuard } from './provider-authenticated.guard';
 import { ProviderLayoutComponent } from './provider-layout/provider-layout.component';
 
 const routes: Routes = [
   {
     path: '', pathMatch: 'full', redirectTo: 'dashboard'
+  },
+  {
+    path: 'login', component: ProviderAuthLayoutComponent
   },
   {
     path: 'dashboard',
@@ -35,7 +40,8 @@ const routes: Routes = [
         path: 'profile',
         component: ProviderProfileComponent
       }
-    ]
+    ],
+    canActivate: [ProviderAuthenticatedGuard]
   }
 ];
 

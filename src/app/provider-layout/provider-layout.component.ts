@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ProviderAuthService } from '../services/provider-auth.service';
 
 @Component({
   selector: 'app-provider-layout',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProviderLayoutComponent implements OnInit {
 
-  constructor() { }
+  constructor(public auth: ProviderAuthService) { }
 
   ngOnInit(): void {
   }

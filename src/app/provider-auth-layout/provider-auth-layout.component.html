@@ -1,0 +1,11 @@
+<div class="flex justify-center items-center h-screen">
+    <mat-card class="lg:w-1/4 sm:w-1/2 picture">
+        <app-provider-login *ngIf="showFirst"></app-provider-login>
+        <app-provider-register *ngIf="!showFirst"></app-provider-register>
+        <mat-divider class="mb-2"></mat-divider>
+        <mat-card-actions class="float-right mt-2 mb-1">
+            <button mat-raised-button (click)="!showFirst ? toggle() : null" color="primary">Login</button>
+            <button mat-raised-button (click)="showFirst ? toggle() : null" color="primary">Register</button>
+        </mat-card-actions>
+    </mat-card>
+</div>

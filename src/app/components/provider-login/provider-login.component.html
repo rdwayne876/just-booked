@@ -1,0 +1,27 @@
+<mat-card-title class="mb-6">Member Login</mat-card-title>
+<form [formGroup]="loginForm">
+  <div class="w-auto">
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Enter your email</mat-label>
+      <input matInput placeholder="pat@example.com" formControlName="email" required>
+      <mat-error>{{getErrorMessage()}}</mat-error>
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Enter your password</mat-label>
+      <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+      <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+        [attr.aria-pressed]="hide">
+        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+  <div>
+    <button (click)="submit()" mat-raised-button color="primary" class="mb-4">Sign In</button>
+  </div>
+  <div class="flex justify-between w-full mb-4">
+    <mat-checkbox formControlName="remember">Remember Me</mat-checkbox>
+    <a href="">Forgot Password?</a>
+  </div>
+</form>

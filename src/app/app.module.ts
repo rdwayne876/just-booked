@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -13,7 +14,10 @@ import {MatSidenavModule, MatDrawer} from '@angular/material/sidenav';
 import { MatGridListModule} from '@angular/material/grid-list';
 import {MatCardModule} from '@angular/material/card';
 import {MatDividerModule} from '@angular/material/divider';
-
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatButtonModule} from '@angular/material/button';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 import { SidebarComponent } from './provider/components/sidebar/sidebar.component';
 import { DashboardComponent } from './provider/pages/dashboard/dashboard.component';
@@ -24,6 +28,10 @@ import { ProviderAppointmentsComponent } from './components/provider-appointment
 import { ProviderServicesComponent } from './components/provider-services/provider-services.component';
 import { ProviderReviewsComponent } from './components/provider-reviews/provider-reviews.component';
 import { ProviderProfileComponent } from './components/provider-profile/provider-profile.component';
+import { ProviderLoginComponent } from './components/provider-login/provider-login.component';
+import { ProviderAuthLayoutComponent } from './provider-auth-layout/provider-auth-layout.component';
+import { ProviderRegisterComponent } from './components/provider-register/provider-register.component';
+
 
 
 
@@ -39,6 +47,9 @@ import { ProviderProfileComponent } from './components/provider-profile/provider
     ProviderServicesComponent,
     ProviderReviewsComponent,
     ProviderProfileComponent,
+    ProviderLoginComponent,
+    ProviderAuthLayoutComponent,
+    ProviderRegisterComponent,
   ],
   imports: [
     BrowserModule,
@@ -50,7 +61,12 @@ import { ProviderProfileComponent } from './components/provider-profile/provider
     MatSidenavModule,
     MatGridListModule,
     MatCardModule,
-    MatDividerModule
+    MatDividerModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    HttpClientModule,
+    MatCheckboxModule
   ],
   providers: [
     {

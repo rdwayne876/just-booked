@@ -1,5 +1,6 @@
 const express = require('express');
 const morgan = require('morgan');
+var cors = require('cors')
 const app = express();
 const authRouter = require( './routes/auth')
 const providerRouter = require( './routes/provider')
@@ -10,6 +11,7 @@ const appointmentRouter = require( './routes/appointment')
 // 1) MIDDLEWARES
 app.use(morgan('dev'));
 app.use(express.json());
+app.use(cors())
 
 //Morgan
 app.use((req, res, next) =>{
