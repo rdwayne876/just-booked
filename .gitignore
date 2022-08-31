@@ -38,6 +38,7 @@ yarn-error.log
 testem.log
 /typings
 /api-server/.env
+/src/assets/imgs
 
 # System files
 .DS_Store
