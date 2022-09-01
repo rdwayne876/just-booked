@@ -126,6 +126,5 @@ exports.findAppointments = async( req, res) => {
             })
     } catch( err) {
         console.error( err)
-
     }
 }

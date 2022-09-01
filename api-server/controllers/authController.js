@@ -142,7 +142,7 @@ exports.login = async (req, res) => {
             const accessToken = jwt.sign(
                 { user: provider._id },
                 process.env.ACCESS_TOKEN_SECRET,
-                { expiresIn: "15m" }
+                { expiresIn: "120m" }
             )
 
             //create refresh token 
@@ -231,7 +231,7 @@ exports.authTest = async (req, res) => {
 exports.account = async (req, res) => {
     try {
 
-        const user = await Provider.findById(req.user.user)
+        const user = await Provider.findById(req.user.user).populate("appointments").populate("services")
 
         res.status(201).json({
             status: "Success",
