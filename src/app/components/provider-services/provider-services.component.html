@@ -1,15 +1,31 @@
-<div class="p-12">
-    <h1>My Services</h1>
-
-    <h3> Manage all the services you offer</h3>
-
-    <mat-divider></mat-divider>
-
-    <div class="flex flex-col w-full p-12">
-        <div class="flex flex-row-reverse p-4">
-            <button mat-raised-button color="warn">Add  Service</button>
-        </div>
-        <div class="flex justify-between p-4">
-
-        </div>
+<div class="flex flex-col w-full p-12">
+    <div class="flex flex-row-reverse p-4">
+        <button mat-raised-button color="warn" routerLink="add">Add Service</button>
     </div>
+
+    <div class="p-2" *ngFor="let service of user.services">
+        <mat-card class="p-0 m-0">
+            <div class="flex justify-between ">
+                <div class="flex">
+                    <div class="">
+                        <img src="{{service.imageUrl}}" alt="" width="225px">
+                    </div>
+                    <div class="flex flex-col justify-between px-4">
+                        <div class="flex flex-col">
+                            <h1>{{ service.name}}</h1>
+                            <p>{{service.description}}</p>
+                        </div>
+
+                        <div class="flex flex-col-reverse">
+                            {{service.cost | currency}} - {{transform( service.time)}}
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-center p-4">
+                    <button mat-stroked-button color="primary" class="px-2 mx-1">Edit</button>
+                    <button mat-stroked-button color="warn" class="px-2 mx-1">Delete</button>
+                </div>
+            </div>
+        </mat-card>
+    </div>
+</div>

@@ -15,10 +15,15 @@ export class ProviderServicesComponent implements OnInit {
   
   ngOnInit(): void {
     console.log(this.user);
+   this.user = this.auth._authenticatedUser
     
   }
 
-
+transform( mins: number): string{
+  const hours = Math.floor( mins/60)
+  const minutes = mins % 60;
+  return `${hours}h${ minutes > 0 ? `${minutes}mins`: ''}`
+}
 
 
 

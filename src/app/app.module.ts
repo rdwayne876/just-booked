@@ -32,6 +32,8 @@ import { ProviderLoginComponent } from './components/provider-login/provider-log
 import { ProviderAuthLayoutComponent } from './provider-auth-layout/provider-auth-layout.component';
 import { ProviderRegisterComponent } from './components/provider-register/provider-register.component';
 import { ProviderAuthInterceptorProvider } from './provider-auth.interceptor';
+import { ProviderServicesRouterComponent } from './components/provider-services-router/provider-services-router.component';
+import { ProviderServicesAddComponent } from './components/provider-services-add/provider-services-add.component';
 
 
 
@@ -51,6 +53,8 @@ import { ProviderAuthInterceptorProvider } from './provider-auth.interceptor';
     ProviderLoginComponent,
     ProviderAuthLayoutComponent,
     ProviderRegisterComponent,
+    ProviderServicesRouterComponent,
+    ProviderServicesAddComponent,
   ],
   imports: [
     BrowserModule,
