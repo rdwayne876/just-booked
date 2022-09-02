@@ -1,5 +1,9 @@
-<div class="p-12">
-    <h1>Hi {{user.data.user.firstName}}</h1>
+
+<mat-spinner *ngIf="!user" class="min-h-full min-w-full mx-auto"></mat-spinner>
+
+
+<div *ngIf="user" class="p-12">
+    <h1>Hi {{user.firstName}}</h1>
 
     <h3> Here's your forcast for the day</h3>
 

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthApiService } from 'src/app/services/auth-api.service';
+import { ProviderAuthService } from 'src/app/services/provider-auth.service';
 
 @Component({
   selector: 'app-provider-services',
@@ -7,9 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProviderServicesComponent implements OnInit {
 
-  constructor() { }
+  constructor( private auth:ProviderAuthService) { }
 
+  user: any = this.auth._authenticatedUser
+  
   ngOnInit(): void {
+    console.log(this.user);
+    
   }
+
+
+
+
 
 }

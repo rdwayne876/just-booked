@@ -8,6 +8,9 @@ const serviceSchema = new mongoose.Schema({
     description: {
         type: String,
     },
+    imageUrl: {
+        type: String
+    },
     category: {
         type: String,
         required: [true, 'Service category must be specified']

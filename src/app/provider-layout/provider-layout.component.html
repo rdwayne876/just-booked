@@ -1,2 +1,2 @@
 <app-navbar *ngIf="auth.isLoggedIn$ | async"></app-navbar>
-<app-sidebar></app-sidebar>
+<app-sidebar *ngIf="auth.isLoggedIn$ | async"></app-sidebar>

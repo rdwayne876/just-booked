@@ -33,6 +33,8 @@ export class ProviderLoginComponent implements OnInit {
 
   submit(){
     this.auth.login( this.loginForm.value).subscribe(( resp) => {
+      console.log('provider auth login call');
+      
       this.router.navigate(['dashboard'])
     })
   }

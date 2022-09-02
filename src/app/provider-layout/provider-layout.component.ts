@@ -11,6 +11,7 @@ export class ProviderLayoutComponent implements OnInit {
   constructor(public auth: ProviderAuthService) { }
 
   ngOnInit(): void {
+    this.auth.profile().subscribe(( resp) => console.log('dashborad layout provider auth service call'))
   }
 
 }

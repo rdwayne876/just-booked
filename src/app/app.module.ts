@@ -18,6 +18,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 import { SidebarComponent } from './provider/components/sidebar/sidebar.component';
 import { DashboardComponent } from './provider/pages/dashboard/dashboard.component';
@@ -66,7 +67,8 @@ import { ProviderAuthInterceptorProvider } from './provider-auth.interceptor';
     MatInputModule,
     MatButtonModule,
     HttpClientModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatProgressSpinnerModule
   ],
   providers: [
     ProviderAuthInterceptorProvider
