@@ -5,6 +5,7 @@ import { ProviderDashboardComponent } from './components/provider-dashboard/prov
 import { ProviderProfileComponent } from './components/provider-profile/provider-profile.component';
 import { ProviderReviewsComponent } from './components/provider-reviews/provider-reviews.component';
 import { ProviderServicesAddComponent } from './components/provider-services-add/provider-services-add.component';
+import { ProviderServicesEditComponent } from './components/provider-services-edit/provider-services-edit.component';
 import { ProviderServicesRouterComponent } from './components/provider-services-router/provider-services-router.component';
 import { ProviderServicesComponent } from './components/provider-services/provider-services.component';
 import { ProviderAuthLayoutComponent } from './provider-auth-layout/provider-auth-layout.component';
@@ -41,6 +42,10 @@ const routes: Routes = [
           {
             path: 'add',
             component: ProviderServicesAddComponent
+          },
+          {
+            path: 'edit/:id',
+            component: ProviderServicesEditComponent
           }
         ]
       },
