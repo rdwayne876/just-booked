@@ -1,1 +1,66 @@
-<p>provider-services-add works!</p>
+<div class="p-12 w-4/5 mx-auto">
+    <mat-card>
+        <mat-card-title>Add a new service</mat-card-title>
+        <form [formGroup]="serviceForm" class="flex flex-col">
+            <mat-form-field appearance="standard">
+            <mat-label>Service Name</mat-label>
+            <input matInput placeholder="Enter the name of your service" formControlName="name">
+            </mat-form-field>
+
+            <mat-form-field appearance="standard">
+                <mat-label>Image Url</mat-label>
+                <input matInput placeholder="Enter image url" formControlName="imageUrl">
+            </mat-form-field>
+
+            <mat-form-field appearance="standard">
+                <mat-label>Category</mat-label>
+                <input matInput placeholder="Enter image url" formControlName="category">
+            </mat-form-field>
+
+            <div class="flex">
+                <mat-form-field appearance="standard" class="w-full mr-2">
+                    <mat-label>Duration</mat-label>
+                    <input matInput placeholder="Enter duration in minutes" type="number" formControlName="time">
+                </mat-form-field>
+                <mat-form-field appearance="standard" class="w-full ml-2">
+                    <mat-label>Price</mat-label>
+                    <input matInput type="number" class="example-right-align" placeholder="0" formControlName="cost">
+                    <span matPrefix>$&nbsp;</span>
+                    <span matSuffix>.00</span>
+                </mat-form-field>
+            </div>
+
+
+            <!-- Auto-complete for selecting a category -->
+            <!-- <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Category</mat-label>
+            <input type="text"
+                    placeholder="Choose a category"
+                    aria-label="Category"
+                    matInput
+                    formControlName="Category"
+                    [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let category of categories" [value]="category">
+                    {{category}}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field> -->
+
+            <mat-form-field class="example-full-width" appearance="standard">
+                <mat-label>Description</mat-label>
+                <textarea matInput placeholder="Tell us more about what you do" formControlName="description"></textarea>
+            </mat-form-field>
+            <!-- <div>
+                <button type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
+                <input hidden (change)="onFileSelected($event)" #fileInput multiple type="file">
+                <span class="file-name" *ngFor="let file of selectedFile">{{file}}, </span>
+            </div>
+             -->
+        </form>
+        <mat-card-actions align="end">
+            <button mat-raised-button color="warn">Cancel</button>
+            <button mat-raised-button color="primary" (click)="submit()">Submit</button>
+        </mat-card-actions>
+    </mat-card>
+</div>

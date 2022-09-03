@@ -3,8 +3,12 @@ const Provider = require('../models/providers')
 
 exports.create = async( req, res) => {
     try{
+
+        console.log(req.body);
+
         //get service data from deconstructor
         const { name, description, imageUrl, category, cost, time, provider} = req.body
+
 
         //create the service
         const service = await Service.create({
