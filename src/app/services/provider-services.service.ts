@@ -46,4 +46,8 @@ export class ProviderServicesService {
     return this.http.patch<ProviderService>(`${this.REST_API_SERVER}${id}`, body, this.HTTP_HEADER)
   }
 
+  public delete( id: string): Observable<ProviderService> {
+    return this.http.delete<ProviderService>(`${this.REST_API_SERVER}${id}`, this.HTTP_HEADER)
+  }
+
 }
