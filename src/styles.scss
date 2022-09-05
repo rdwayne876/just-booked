@@ -3,5 +3,6 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 @import '../node_modules/angular-calendar/css/angular-calendar';
+@import '@sweetalert2/theme-material-ui/material-ui.scss';
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

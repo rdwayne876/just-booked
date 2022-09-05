@@ -1,1 +1,4 @@
-<p>provider-appointments-dialog works!</p>
+<div class="flex justify-between items-center">
+    <h1 mat-dialog-title> {{appointment.resp.data.appointments.appointments[0].services[0].name}} with {{appointment.resp.data.appointments.appointments[0].user.firstName}} {{appointment.resp.data.appointments.appointments[0].user.lastName}}</h1>
+<p>{{startDate}} - {{endDate}}</p>
+</div>

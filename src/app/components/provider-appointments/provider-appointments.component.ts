@@ -21,6 +21,8 @@ import { ProviderAuthService } from 'src/app/services/provider-auth.service';
 import { map, tap } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { ProviderAppointmentsDialogComponent } from '../provider-appointments-dialog/provider-appointments-dialog.component';
+import Swal from 'sweetalert2';
+import { ProviderAppointmentService } from 'src/app/services/provider-appointment.service';
 
 @Component({
   selector: 'app-provider-appointments',
@@ -35,7 +37,7 @@ export class ProviderAppointmentsComponent implements OnInit {
   events$!: Observable<CalendarEvent<any>[]>;
   activeDayIsOpen!: boolean;
 
-  constructor(private provider: ProviderService, private auth: ProviderAuthService, private dialog: MatDialog  ) { }
+  constructor(private provider: ProviderService, private auth: ProviderAuthService, private dialog: MatDialog, private appointment: ProviderAppointmentService  ) { }
 
   ngOnInit(): void {
     this.fetchEvents()
@@ -61,9 +63,9 @@ export class ProviderAppointmentsComponent implements OnInit {
             title: appointment.user.firstName,
             start: new Date(appointment.date),
             end: addMinutes(new Date(appointment.date), resp.data.time),
-            color: colors.yellow,
+            color: appointment.confirmed ? colors.green : colors.yellow,
             allDay: false,
-            meta: { appointment}
+            meta: { appointment }
           }
         })
       })
@@ -98,12 +100,36 @@ export class ProviderAppointmentsComponent implements OnInit {
 
   openDialog( appt: any) {
     this.dialog.open( ProviderAppointmentsDialogComponent, {
-      width: '80%',
+      width: '50%',
       data: appt
     })
   }
 
   eventClicked( event: CalendarEvent<any>): void {
-    this.openDialog( event.meta)
+    // this.openDialog( event.meta)
+    console.log(event.meta.appointment._id);
+    
+    Swal.fire({
+      title: `Confirm ${event.meta.appointment.services[0].name} with ${event.meta.appointment.user.firstName} ${event.meta.appointment.user.lastName}`,
+      icon: 'question',
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: 'Confirm',
+      denyButtonText: 'Cancel',
+      cancelButtonText: 'Back',
+    }).then(( result) => {
+      if( result.isConfirmed) {
+        this.confirmAppointment( event.meta.appointment._id)
+        Swal.fire('Confirmed', 'Your appointment has been confirmed', 'success')
+      } else if( result.isDenied) {
+        Swal.fire( 'Cancelled!', 'The appointment has been cancelled', 'error')
+      }
+    })
+  }
+
+  confirmAppointment( id: string){
+    const appointment = { confirmed: true}
+    this.appointment.updateAppointment( id, appointment).subscribe( resp => { console.log(resp);
+    })
   }
 }
