@@ -1,1 +1,34 @@
-<p>provider-appointments works!</p>
+<div class="p-12">
+  <h1>My Appointments</h1>
+
+  <h3> Manage your appointments</h3>
+
+
+  <div class="py-2">
+    <mwl-utils-calendar-header class="" [(view)]="view" [(viewDate)]="viewDate" (viewDateChange)="fetchEvents()"
+      (viewChange)="fetchEvents()">
+    </mwl-utils-calendar-header>
+
+    <ng-template #loading>
+      <div class="text-center">
+        <i class="fas fa-spin fa-spinner fa-5x"></i> <br />
+        Loading events...
+      </div>
+    </ng-template>
+
+    <div *ngIf="events$ | async; else loading; let events">
+      <div [ngSwitch]="view">
+        <mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="events"
+          [activeDayIsOpen]="activeDayIsOpen" (dayClicked)="dayClicked($event.day)" (eventClicked)="eventClicked($event.event)">
+        </mwl-calendar-month-view>
+        <mwl-calendar-week-view *ngSwitchCase="'week'" [viewDate]="viewDate" [events]="events" [dayStartHour]="8"
+          [dayEndHour]="19" (eventClicked)="eventClicked($event.event)">
+        </mwl-calendar-week-view>
+        <mwl-calendar-day-view *ngSwitchCase="'day'" [viewDate]="viewDate" [events]="events" [dayStartHour]="8"
+          [dayEndHour]="19" (eventClicked)="eventClicked($event.event)">
+        </mwl-calendar-day-view>
+      </div>
+    </div>
+
+  </div>
+</div>

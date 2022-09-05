@@ -2,11 +2,12 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
-
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NavbarComponent } from './provider/components/navbar/navbar.component';
+import { CalendarUtilsModule } from './calendar-utils/module';
+
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns'
 
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
@@ -19,7 +20,11 @@ import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatDialogModule} from '@angular/material/dialog';
 
+import { AppComponent } from './app.component';
+import { NavbarComponent } from './provider/components/navbar/navbar.component';
 import { SidebarComponent } from './provider/components/sidebar/sidebar.component';
 import { DashboardComponent } from './provider/pages/dashboard/dashboard.component';
 import { ProviderLayoutComponent } from './provider-layout/provider-layout.component';
@@ -35,6 +40,7 @@ import { ProviderAuthInterceptorProvider } from './provider-auth.interceptor';
 import { ProviderServicesRouterComponent } from './components/provider-services-router/provider-services-router.component';
 import { ProviderServicesAddComponent } from './components/provider-services-add/provider-services-add.component';
 import { ProviderServicesEditComponent } from './components/provider-services-edit/provider-services-edit.component';
+import { ProviderAppointmentsDialogComponent } from './components/provider-appointments-dialog/provider-appointments-dialog.component';
 
 
 
@@ -57,6 +63,8 @@ import { ProviderServicesEditComponent } from './components/provider-services-ed
     ProviderServicesRouterComponent,
     ProviderServicesAddComponent,
     ProviderServicesEditComponent,
+    ProviderAppointmentsDialogComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -74,7 +82,14 @@ import { ProviderServicesEditComponent } from './components/provider-services-ed
     MatButtonModule,
     HttpClientModule,
     MatCheckboxModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory,
+    }),
+    CalendarUtilsModule,
+    MatTabsModule,
+    MatDialogModule
   ],
   providers: [
     ProviderAuthInterceptorProvider

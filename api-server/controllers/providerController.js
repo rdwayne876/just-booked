@@ -1,3 +1,4 @@
+const { populate } = require('../models/providers')
 const Provider = require('../models/providers')
 const Service = require('../models/service')
 
@@ -114,14 +115,31 @@ exports.findService = async( req, res) => {
 
 exports.findAppointments = async( req, res) => {
     try{
-        const appointments = await Provider.findById(req.params.id).populate("appointments")
-            .select('-_id -firstName -lastName -email -password -phone -refreshToken -services -__v -updatedAt')
+        // const appointments = await Provider.findById(req.params.id).populate("appointments")
+        //     .select('-_id -firstName -lastName -email -password -phone -refreshToken -services -__v -updatedAt').populate("provider").populate("user")
+            
+            const appointments = await Provider.findById(req.params.id).populate({
+                path: 'appointments',
+                select: { 'provider': 0},
+                populate: [{ path: 'services'}, {path: 'user', select: { 'password': 0, 'appointments': 0, }}],
+                
+            },
+            ).select(' -email -password -phone -refreshToken -services -__v -updatedAt')
+
+           
+
+
+            const time = appointments.appointments[0].services.reduce(( n, {time}) => n + time, 0)
+
+            console.log( time);
+
 
         return res.status(200).json({
             success: true,
             message: 'Appointments found successfully',
             data: {
-                appointments
+                appointments,
+                time
                 }
             })
     } catch( err) {

@@ -9,6 +9,7 @@ import { AuthApiService } from './auth-api.service';
 export class ProviderAuthService {
 
   private readonly TOKEN_NAME = 'provider_auth'
+  private readonly ID = 'id'
   private readonly FIRST_NAME = 'first_name'
   private readonly LAST_NAME = 'last_name'
 
@@ -18,6 +19,10 @@ export class ProviderAuthService {
 
   get token(){
     return localStorage.getItem(this.TOKEN_NAME)
+  }
+
+  get id(){
+    return localStorage.getItem( this.ID)!
   }
 
   get firstName(){
@@ -39,6 +44,7 @@ export class ProviderAuthService {
         console.log(resp);
         this._isLoggedIn$.next( true)
         localStorage.setItem( this.TOKEN_NAME, resp.data.accessToken)
+        localStorage.setItem( this.ID, resp.data.provider._id)
         localStorage.setItem( this.FIRST_NAME, resp.data.provider.firstName) 
         localStorage.setItem( this.LAST_NAME, resp.data.provider.lastName)     
       })
