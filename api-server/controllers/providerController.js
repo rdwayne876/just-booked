@@ -126,10 +126,10 @@ exports.findAppointments = async( req, res) => {
             },
             ).select(' -email -password -phone -refreshToken -services -__v -updatedAt')
 
-           
-
-
-            const time = appointments.appointments[0].services.reduce(( n, {time}) => n + time, 0)
+           let time = 0
+            if( appointments.appointments[0] != null){
+                 time = appointments.appointments[0].services.reduce(( n, {time}) => n + time, 0)
+            }
 
             console.log( time);
 

@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
@@ -8,6 +9,7 @@ import { CalendarUtilsModule } from './calendar-utils/module';
 
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns'
+import { FlatpickrModule } from 'angularx-flatpickr';
 
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
@@ -41,6 +43,7 @@ import { ProviderServicesRouterComponent } from './components/provider-services-
 import { ProviderServicesAddComponent } from './components/provider-services-add/provider-services-add.component';
 import { ProviderServicesEditComponent } from './components/provider-services-edit/provider-services-edit.component';
 import { ProviderAppointmentsDialogComponent } from './components/provider-appointments-dialog/provider-appointments-dialog.component';
+import { DatePickrComponent } from './components/date-pickr/date-pickr.component';
 
 
 
@@ -64,6 +67,7 @@ import { ProviderAppointmentsDialogComponent } from './components/provider-appoi
     ProviderServicesAddComponent,
     ProviderServicesEditComponent,
     ProviderAppointmentsDialogComponent,
+    DatePickrComponent,
     
   ],
   imports: [
@@ -89,7 +93,9 @@ import { ProviderAppointmentsDialogComponent } from './components/provider-appoi
     }),
     CalendarUtilsModule,
     MatTabsModule,
-    MatDialogModule
+    MatDialogModule,
+    FlatpickrModule.forRoot(),
+    FormsModule
   ],
   providers: [
     ProviderAuthInterceptorProvider

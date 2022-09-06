@@ -22,6 +22,10 @@ const appointmentSchema = new mongoose.Schema({
     confirmed: {
         type: Boolean,
         default: false
+    }, 
+    cancelled: {
+        type: Boolean,
+        default: false
     }
 },
 {

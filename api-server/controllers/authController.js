@@ -10,8 +10,8 @@ exports.register = async (req, res) => {
     try {
 
         // Validate user info
-        const { error } = registerValidation(req.body)
-        if (error) return res.status(400).send(error.details[0].message)
+        // const { error } = registerValidation(req.body)
+        // if (error) return res.status(400).send(error.details[0].message)
 
         if (req.params.type === 'provider') {
             // Deconstructor gets user input
@@ -20,7 +20,10 @@ exports.register = async (req, res) => {
             //check if provider already exists
             const oldProvider = await Provider.findOne({ email })
 
+
             if (oldProvider) {
+            console.log(oldProvider._id);
+
                 return res.status(409).json({
                     status: "Failed",
                     message: "User already exists. Please login"

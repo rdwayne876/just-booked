@@ -32,3 +32,6 @@
 
   </div>
 </div>
+<div #myInput [ngClass]="{'hidden' : !isModal}">
+  <app-date-pickr (selectedDateChange)="getDate($event)" ></app-date-pickr>
+</div>

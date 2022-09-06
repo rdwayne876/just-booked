@@ -28,11 +28,11 @@ export class ProviderDashboardComponent implements OnInit {
   }
 
   pendingCount(): number{
-    return this.user.appointments.filter(( obj:any ) => obj.confirmed === false && new Date (obj.date) > new Date ).length
+    return this.user.appointments.filter(( obj:any ) => obj.confirmed === false && new Date (obj.date) > new Date && obj.cancelled === false).length
   }
 
   upcomingCount(): number{
-    return this.user.appointments.filter(( obj:any ) => obj.confirmed === false && new Date (obj.date) > new Date ).length
+    return this.user.appointments.filter(( obj:any ) => obj.confirmed === true && new Date (obj.date) > new Date && obj.cancelled === false ).length
   }
 
 }
