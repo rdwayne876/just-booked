@@ -97,7 +97,7 @@ exports.deleteOne = async( req, res) => {
 exports.findService = async( req, res) => {
     try{
         // get services of the provider
-        const services = await Provider.findById(req.params.id).populate("services")
+        const services = await Provider.findById(req.params.id).populate("service")
             .select('-_id -firstName -lastName -email -password -phone -refreshToken -appointments -__v -updatedAt')
 
         //return services
@@ -121,16 +121,15 @@ exports.findAppointments = async( req, res) => {
             const appointments = await Provider.findById(req.params.id).populate({
                 path: 'appointments',
                 select: { 'provider': 0},
-                populate: [{ path: 'services'}, {path: 'user', select: { 'password': 0, 'appointments': 0, }}],
+                populate: [{ path: 'service'}, {path: 'user', select: { 'password': 0, 'appointments': 0, }}],
                 
             },
             ).select(' -email -password -phone -refreshToken -services -__v -updatedAt')
 
            let time = 0
             if( appointments.appointments[0] != null){
-                 time = appointments.appointments[0].services.reduce(( n, {time}) => n + time, 0)
+                 time = appointments.appointments[0].service.time
             }
-
             console.log( time);
 
 

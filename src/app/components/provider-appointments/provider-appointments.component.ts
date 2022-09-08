@@ -26,6 +26,7 @@ import { ProviderAppointmentService } from 'src/app/services/provider-appointmen
 import { CustomEventTitleFormatter } from 'src/app/custom-event-title-formatter.provider';
 import flatpickrInstance from 'flatpickr'
 import { DatePickrComponent } from '../date-pickr/date-pickr.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-provider-appointments',
@@ -46,20 +47,40 @@ export class ProviderAppointmentsComponent implements OnInit {
   events$!: Observable<CalendarEvent<any>[]>;
   activeDayIsOpen!: boolean;
   isModal: boolean = false;
+  apptId!: string
+  newDate!: object
 
 
   @ViewChild('myInput', { static: false })
   myInput!: ElementRef;
 
-  constructor(private provider: ProviderService, private auth: ProviderAuthService, private dialog: MatDialog, private appointment: ProviderAppointmentService) { }
+  constructor(private provider: ProviderService,
+    private auth: ProviderAuthService,
+    private dialog: MatDialog,
+    private appointment: ProviderAppointmentService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.fetchEvents()
   }
 
-  getDate( date: Date){
+  getDate(date: Date, id: string) {
     console.log(date);
-    
+    this.newDate = { date: date }
+    this.appointment.updateAppointment(id, this.newDate).subscribe(
+      resp => {
+        if (resp) {
+          console.log(resp);
+
+          Swal.close()
+        }
+      },
+      err => {
+        alert(err.error.message)
+      }
+    )
+
   }
 
   fetchEvents(): void {
@@ -67,11 +88,13 @@ export class ProviderAppointmentsComponent implements OnInit {
     this.events$ = this.provider.getAppointments(this.auth.id).pipe(
       map((resp: any) => {
         return resp.data.appointments.appointments.map((appointment: any) => {
+          // console.log(appointment);
+
           return {
-            title: `${appointment.services[0].name} - ${appointment.user.firstName} ${appointment.user.lastName}`,
+            title: `${appointment.service.name} - ${appointment.user.firstName} ${appointment.user.lastName}`,
             start: new Date(appointment.date),
             end: addMinutes(new Date(appointment.date), resp.data.time),
-            color: appointment.confirmed ? colors.green : colors.yellow,
+            color: appointment.confirmed ? colors.green : appointment.cancelled ? colors.red : colors.yellow,
             allDay: false,
             meta: { appointment }
           }
@@ -79,10 +102,10 @@ export class ProviderAppointmentsComponent implements OnInit {
       })
     )
 
-    console.log(this.events$);
+    // console.log(this.events$);
 
     this.events$.subscribe(resp => {
-      console.log(resp);
+      // console.log(resp);
     })
   }
 
@@ -115,16 +138,79 @@ export class ProviderAppointmentsComponent implements OnInit {
 
   eventClicked(event: CalendarEvent<any>): void {
     // this.openDialog( event.meta)
-    console.log(event.meta.appointment._id);
+    console.log(event.meta.appointment.cancelled);
+    if (event.meta.appointment.cancelled) {
+      Swal.fire({
+        title: 'Appointment is cancelled',
+        html: 'No Actions Available',
+        timer: 2000,
+        timerProgressBar: true,
+      })
+
+      return
+    }
+
+    if( event.meta.appointment.confirmed){
+      this.isModal = true;
+      this.apptId = event.meta.appointment._id
+      Swal.fire({
+        title: `Cancel/Reschedule ${event.meta.appointment.service.name} with ${event.meta.appointment.user.firstName} ${event.meta.appointment.user.lastName}`,
+        icon: 'question',
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: 'Reschedule',
+        denyButtonText: 'Cancel',
+        cancelButtonText: 'Abort'      
+      }).then(( result) => {
+        if( result.isConfirmed){
+          Swal.fire({
+            title: 'Reschedule appointment',
+            icon: 'question',
+            showConfirmButton: false,
+            html: this.myInput.nativeElement,
+            cancelButtonText: 'Abort',
+          })
+        } else if( result.isDenied){
+          Swal.fire({
+            title: `Are you sure want to Cancel this appointment?`,
+            text: 'This action is irreversible!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, Cancel it!',
+            cancelButtonText: 'No, keep it',
+      
+          }).then((result) => {
+            if (result.value) {
+              this.cancelAppointment( this.apptId)
+              Swal.fire(
+                'Cancelled!',
+                `Your appointment has been cancelled`,
+                'success'
+              )
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+              Swal.fire(
+                'Aborted',
+                'Your Appointment is safe ',
+                'error'
+              )
+            }
+          })
+        }
+      })
+
+      return
+    }
+
     this.isModal = true;
+    this.apptId = event.meta.appointment._id
 
     Swal.fire({
-      title: `Confirm ${event.meta.appointment.services[0].name} with ${event.meta.appointment.user.firstName} ${event.meta.appointment.user.lastName}`,
+      title: `Confirm ${event.meta.appointment.service.name} with ${event.meta.appointment.user.firstName} ${event.meta.appointment.user.lastName}`,
       icon: 'question',
       showDenyButton: true,
       showCancelButton: true,
       confirmButtonText: 'Confirm Appointment',
-      denyButtonText: 'Reschedule/Cancel Appointment',
+      denyButtonText: 'Reschedule/Cancel',
       cancelButtonText: 'Abort',
     }).then((result) => {
       if (result.isConfirmed) {
@@ -137,14 +223,13 @@ export class ProviderAppointmentsComponent implements OnInit {
           showDenyButton: true,
           showCancelButton: true,
           html: this.myInput.nativeElement,
-          confirmButtonText: 'Set New Date',
           denyButtonText: 'Cancel Appointment',
           cancelButtonText: 'Abort',
         }).then((result) => {
-          if( result.isConfirmed){
-
+          if (result.isDenied) {
+            this.cancelAppointment(event.meta.appointment._id)
+            Swal.fire('Appointment Cancelled', 'Your appointment has been Cancelled', 'success')
           }
-          
         })
       }
     })
@@ -153,19 +238,15 @@ export class ProviderAppointmentsComponent implements OnInit {
   confirmAppointment(id: string) {
     const appointment = { confirmed: true }
     this.appointment.updateAppointment(id, appointment).subscribe(resp => {
-      console.log(resp);
+      // console.log(resp);
     })
   }
 
   cancelAppointment(id: string) {
     const appointment = { cancelled: true }
     this.appointment.updateAppointment(id, appointment).subscribe(resp => {
-      console.log(resp);
+      // console.log(resp);
     })
   }
 
-  cancelalert(event: any) {
-
-
-  }
 }

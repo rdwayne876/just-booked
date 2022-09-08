@@ -2,10 +2,12 @@
     <div class="mb-2 border-solid border-grey-light rounded border shadow-sm">
         <div class="bg-grey-lighter px-2 py-3 border-solid border-grey-light border-b">
             <h2 class=" mb-0">Choose a new Date</h2>
+            <p class="mb-0 text-sm">Select Time then Date</p>
         </div>
         <div class="p-3 text-center">
             <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-center" type="text" mwlFlatpickr [(ngModel)]="dateTimeValue" [altInput]="true"
-                [convertModelValue]="true" [enableTime]="true" dateFormat="Y-m-d H:i" onfocus="getDate( )" onmouseleave="getDate( dateTimeValue)" onchange="getDate( dateTimeValue)">
+                [convertModelValue]="true" [enableTime]="true" dateFormat="Y-m-d H:i">
+                <p class="mb-0 text-sm"> {{dateTimeValue}}</p>
                 <button (click)="getDate( dateTimeValue)" class="mt-2 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
                     Confirm
                 </button>

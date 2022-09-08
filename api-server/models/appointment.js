@@ -13,12 +13,10 @@ const appointmentSchema = new mongoose.Schema({
         type: Date,
         required: true
     },
-    services: [
-        {
+    service: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Service'
-        }
-    ],
+        },
     confirmed: {
         type: Boolean,
         default: false
