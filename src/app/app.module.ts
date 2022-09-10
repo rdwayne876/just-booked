@@ -44,6 +44,10 @@ import { ProviderServicesAddComponent } from './components/provider-services-add
 import { ProviderServicesEditComponent } from './components/provider-services-edit/provider-services-edit.component';
 import { ProviderAppointmentsDialogComponent } from './components/provider-appointments-dialog/provider-appointments-dialog.component';
 import { DatePickrComponent } from './components/date-pickr/date-pickr.component';
+import { LandingPageComponent } from './website/components/landing-page/landing-page.component';
+import { WebNavbarComponent } from './website/components/web-navbar/web-navbar.component';
+import { WebBannerComponent } from './website/components/web-banner/web-banner.component';
+import { FooterComponent } from './website/components/footer/footer.component';
 
 
 
@@ -68,6 +72,10 @@ import { DatePickrComponent } from './components/date-pickr/date-pickr.component
     ProviderServicesEditComponent,
     ProviderAppointmentsDialogComponent,
     DatePickrComponent,
+    LandingPageComponent,
+    WebNavbarComponent,
+    WebBannerComponent,
+    FooterComponent,
     
   ],
   imports: [

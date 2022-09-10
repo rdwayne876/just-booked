@@ -11,10 +11,14 @@ import { ProviderServicesComponent } from './components/provider-services/provid
 import { ProviderAuthLayoutComponent } from './provider-auth-layout/provider-auth-layout.component';
 import { ProviderAuthenticatedGuard } from './provider-authenticated.guard';
 import { ProviderLayoutComponent } from './provider-layout/provider-layout.component';
+import { LandingPageComponent } from './website/components/landing-page/landing-page.component';
 
 const routes: Routes = [
   {
     path: '', pathMatch: 'full', redirectTo: 'dashboard'
+  },
+  {
+    path: 'home', component: LandingPageComponent
   },
   {
     path: 'login', component: ProviderAuthLayoutComponent
