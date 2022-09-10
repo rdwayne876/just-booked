@@ -48,6 +48,8 @@ import { LandingPageComponent } from './website/components/landing-page/landing-
 import { WebNavbarComponent } from './website/components/web-navbar/web-navbar.component';
 import { WebBannerComponent } from './website/components/web-banner/web-banner.component';
 import { FooterComponent } from './website/components/footer/footer.component';
+import { WebSearchComponent } from './website/components/web-search/web-search.component';
+import { WebSearchResultsComponent } from './website/components/web-search-results/web-search-results.component';
 
 
 
@@ -76,6 +78,8 @@ import { FooterComponent } from './website/components/footer/footer.component';
     WebNavbarComponent,
     WebBannerComponent,
     FooterComponent,
+    WebSearchComponent,
+    WebSearchResultsComponent,
     
   ],
   imports: [

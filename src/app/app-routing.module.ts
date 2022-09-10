@@ -12,13 +12,28 @@ import { ProviderAuthLayoutComponent } from './provider-auth-layout/provider-aut
 import { ProviderAuthenticatedGuard } from './provider-authenticated.guard';
 import { ProviderLayoutComponent } from './provider-layout/provider-layout.component';
 import { LandingPageComponent } from './website/components/landing-page/landing-page.component';
+import { WebSearchResultsComponent } from './website/components/web-search-results/web-search-results.component';
+import { WebSearchComponent } from './website/components/web-search/web-search.component';
 
 const routes: Routes = [
-  {
-    path: '', pathMatch: 'full', redirectTo: 'dashboard'
-  },
+  // {
+  //   path: '', pathMatch: 'full', redirectTo: 'home'
+  // },
   {
     path: 'home', component: LandingPageComponent
+  },
+  {
+    path: 'search', component: WebSearchComponent,
+    children: [
+      {
+        path: ':location', component: WebSearchResultsComponent,
+        children: [
+          {
+            path: ':service', component: WebSearchResultsComponent
+          }
+        ]
+      }
+    ]
   },
   {
     path: 'login', component: ProviderAuthLayoutComponent
