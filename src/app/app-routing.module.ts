@@ -12,6 +12,7 @@ import { ProviderAuthLayoutComponent } from './provider-auth-layout/provider-aut
 import { ProviderAuthenticatedGuard } from './provider-authenticated.guard';
 import { ProviderLayoutComponent } from './provider-layout/provider-layout.component';
 import { LandingPageComponent } from './website/components/landing-page/landing-page.component';
+import { WebProviderPageComponent } from './website/components/web-provider-page/web-provider-page.component';
 import { WebSearchResultsComponent } from './website/components/web-search-results/web-search-results.component';
 import { WebSearchComponent } from './website/components/web-search/web-search.component';
 
@@ -34,6 +35,9 @@ const routes: Routes = [
         ]
       }
     ]
+  },
+  {
+    path: 'p/:id', component: WebProviderPageComponent
   },
   {
     path: 'login', component: ProviderAuthLayoutComponent

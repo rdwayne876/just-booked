@@ -50,6 +50,7 @@ import { WebBannerComponent } from './website/components/web-banner/web-banner.c
 import { FooterComponent } from './website/components/footer/footer.component';
 import { WebSearchComponent } from './website/components/web-search/web-search.component';
 import { WebSearchResultsComponent } from './website/components/web-search-results/web-search-results.component';
+import { WebProviderPageComponent } from './website/components/web-provider-page/web-provider-page.component';
 
 
 
@@ -80,6 +81,7 @@ import { WebSearchResultsComponent } from './website/components/web-search-resul
     FooterComponent,
     WebSearchComponent,
     WebSearchResultsComponent,
+    WebProviderPageComponent,
     
   ],
   imports: [
