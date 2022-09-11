@@ -6,6 +6,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CalendarUtilsModule } from './calendar-utils/module';
+import { AutocompleteLibModule } from 'angular-ng-autocomplete';
+
 
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns'
@@ -109,7 +111,8 @@ import { WebProviderPageComponent } from './website/components/web-provider-page
     MatTabsModule,
     MatDialogModule,
     FlatpickrModule.forRoot(),
-    FormsModule
+    FormsModule,
+    AutocompleteLibModule
   ],
   providers: [
     ProviderAuthInterceptorProvider

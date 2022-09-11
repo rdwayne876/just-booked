@@ -19,6 +19,14 @@ export class ProviderServicesService {
   constructor( private http: HttpClient) { }
 
   /**
+   * Get all services
+   * @returns API response with all services if successfull
+   */
+  public getAll(): Observable<ProviderService> {
+    return this.http.get<ProviderService>( this.REST_API_SERVER, this.HTTP_HEADER)
+  }
+
+  /**
    * Create the user service
    * @param body posted form data
    * @returns json with created service
